@@ -1,20 +1,27 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import "./App.css";
-import { NameGenerator, config } from "../../NameGenerator";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import "./App.scss";
+import "./InputForm.scss";
+import { NameGenerator } from "../../NameGenerator";
 import { Numbers } from "../../Utils/Numbers";
+import { config } from "../../Utils/config";
+import { Button } from "../Button/Button";
+import { Description } from "../Layout/Description/Description";
+import { Header } from "../Layout/Header/Header";
 import { NamesList } from "../NamesList/NamesList";
+import { TextInput } from "../TextInput/TextInput";
 
-type FormEvent = React.FormEvent<HTMLInputElement | HTMLFormElement>;
-
-export const App: React.FC = () => {
+export function App() {
   const [result, setResult] = useState<string[]>([]);
   const [namesCount, setNamesCount] = useState(config.defaultNamesCount);
   const template = useRef<HTMLInputElement>(null);
   const countInput = useRef<HTMLInputElement>(null);
 
   function handleRegenerate(event: FormEvent) {
-    NameGenerator.createGenerators();
     event.preventDefault();
+
+    // Clicking Regenerate should make a new set of generator instances
+    // Only the input change should not affect the generators array
+    NameGenerator.createGenerators();
 
     generateResult();
   }
@@ -25,13 +32,20 @@ export const App: React.FC = () => {
     generateResult();
   }
 
+  /**
+   * Converts the input string from
+   */
   function handleCounterChange(event: FormEvent): void {
     event.preventDefault();
 
-    let count = Number(countInput.current?.value ?? 1);
+    let count = Number(countInput.current?.value);
 
-    // Clamp between 1 - 30, no need to render more
-    count = Numbers.clamp(count, 1, 30);
+    if (Number.isNaN(count)) {
+      setNamesCount(0);
+      return;
+    }
+
+    count = Numbers.clamp(count, 0, config.maximumNamesCount);
 
     setNamesCount(count);
   }
@@ -41,12 +55,18 @@ export const App: React.FC = () => {
     const inputString = template.current?.value;
 
     if (!inputString) {
+      setResult([]);
+
       return;
     }
 
     setResult(
       Array.from({ length: namesCount }, (value, index) => {
         return NameGenerator.generateName(inputString, index);
+      }).filter((result) => {
+        // Remove all empty results if only illegal characters were present so the NamesList
+        // component doesn't have to refilter the results after setting the state
+        return result.length !== 0;
       })
     );
   }, [namesCount]);
@@ -56,13 +76,39 @@ export const App: React.FC = () => {
   }, [generateResult, namesCount]);
 
   return (
-    <div>
-      <form onSubmit={handleRegenerate}>
-        <input type="text" ref={countInput} onChange={handleCounterChange} value={namesCount} />
-        <input type="text" ref={template} onChange={handleChange} value={template.current?.value ?? "Ababbab"} />
+    <div className="container">
+      <Header />
+      <Description />
+      <form className="input-form" onSubmit={handleRegenerate}>
+        <div className="input-form__inputs">
+          <div className="input-form__inputs__container">
+            <TextInput
+              defaultValue={namesCount}
+              elementId="count"
+              elementLabelText="Count"
+              elementModifierClassType="counter"
+              elementReference={countInput}
+              maxInputLength={config.maximumCounterInputSize}
+              onChangeInputHandler={handleCounterChange}
+            />
+          </div>
+          <div className="input-form__inputs__container">
+            <TextInput
+              defaultValue={template.current?.value ?? config.defaultTemplate}
+              elementId="template"
+              elementLabelText="Template"
+              elementModifierClassType="template"
+              elementReference={template}
+              maxInputLength={config.maximumTemplateInputSize}
+              onChangeInputHandler={handleChange}
+            />
+          </div>
+          <div className="input-form__inputs__container">
+            <Button text="regenerate" />
+          </div>
+        </div>
         <NamesList names={result} />
-        <button></button>
       </form>
     </div>
   );
-};
+}
