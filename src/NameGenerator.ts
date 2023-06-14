@@ -1,14 +1,6 @@
-import { C64 } from "./Utils/C64";
+import { C64 } from "./Utils/Generators/C64";
 import { TLettersTable } from "./Utils/Types/TLettersTable";
-
-export const config = {
-  casingPatterns: { lower: new RegExp(/[ab]/), upper: new RegExp(/[AB]/) },
-  consonants: "bcdfghjklmnpqrstvwxz",
-  maximumNameLength: 20,
-  maximumNamesCount: 30,
-  vowels: "aeiouy",
-  defaultNamesCount: 10,
-};
+import { config } from "./Utils/config";
 
 class Generator {
   /**
@@ -27,6 +19,10 @@ class Generator {
    * Flag as an argument for the callable methods returning the next character as uppercase, when `true`
    */
   private isCapital = false;
+  /**
+   * Flag used for interruption when multiple concurrent spaces were provided in the input template
+   */
+  private lastCharacterWasSpace = false;
   /**
    * Object of callable methods returning a random character
    */
@@ -71,7 +67,7 @@ class Generator {
     this.rng = this.generators[index];
 
     inputString.split("").forEach((letter: string): void => {
-      this.processLetter(letter);
+      this.processCharacter(letter);
 
       // Generate only as much letters as the defined maximum
       if (this.hasExceededLength()) {
@@ -79,6 +75,12 @@ class Generator {
       }
 
       if (letter === " ") {
+        // Consecutive spaces should interrupt the generation
+        if (this.lastCharacterWasSpace) {
+          return;
+        }
+
+        this.lastCharacterWasSpace = true;
         this.result += " ";
 
         /**
@@ -94,6 +96,8 @@ class Generator {
         this.rng.next();
 
         return;
+      } else {
+        this.lastCharacterWasSpace = false;
       }
 
       if (!this.hasMatchedThePattern()) {
@@ -133,9 +137,9 @@ class Generator {
   /**
    * Checks if the next processed letter has matched the template patterns for name generation
    */
-  private hasMatchedThePattern(): boolean {
+  private hasMatchedThePattern = (): boolean => {
     return this.hasMatchedLowercase || this.hasMatchedUppercase;
-  }
+  };
 
   /**
    * Returns a random consonant from the next Random number
@@ -155,7 +159,12 @@ class Generator {
     return this.getRandomLetter(config.vowels, asCapital);
   };
 
-  private processLetter = (letter: string): void => {
+  /**
+   * Initiates the simple character processor - defined pattern / case matching
+   *
+   * @param   {string}  letter  Currently processed character
+   */
+  private processCharacter = (letter: string): void => {
     this.hasMatchedLowercase = config.casingPatterns.lower.test(letter);
     this.hasMatchedUppercase = config.casingPatterns.upper.test(letter);
 
