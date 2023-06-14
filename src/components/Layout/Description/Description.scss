@@ -1,0 +1,13 @@
+@import '../../../variables.scss';
+
+.description {
+  display: flex;
+  font-size: small;
+  justify-content: center;
+  max-width: $size-container-max;
+  width: 100%;
+
+  & > div:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+}

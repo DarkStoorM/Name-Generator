@@ -1,62 +1,20 @@
 @import '../../variables.scss';
 
 .input-form {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-top: 0.75rem;
   width: 100%;
 
   &__inputs {
-    display: grid;
-
+    display: flex;
     gap: 0.5rem;
-    grid-template-areas: 'a b c';
 
     &__container {
       display: flex;
       flex-direction: row;
       position: relative;
-
-      &--a {
-        grid-area: a;
-      }
-
-      &--b {
-        grid-area: b;
-      }
-
-      &--c {
-        grid-area: c;
-      }
-    }
-
-    &__text {
-      &--counter {
-        width: 6rem;
-      }
-
-      &--template {
-        width: 16rem;
-      }
-    }
-
-    &__button {
-      font-size: 75%;
-      width: 100%;
-    }
-
-    &__label {
-      border: 1px solid $input-border;
-      background-color: $input-background;
-      border-radius: 0.25rem;
-      font-size: 10pt;
-      height: 1rem;
-      left: 0.75rem;
-      line-height: 0.375rem;
-      padding: 0.25rem 0.375rem;
-      top: -0.5rem;
-      position: absolute;
-      text-transform: uppercase;
     }
   }
 }
