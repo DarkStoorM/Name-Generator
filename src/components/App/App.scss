@@ -11,12 +11,12 @@
 html {
   line-height: 140%;
   -webkit-text-size-adjust: 140%;
-
   font-size: 16pt;
 }
 
 body {
   margin: 0;
+  padding: 0;
   background-color: $background;
   color: $font-color-base;
 }
@@ -28,7 +28,7 @@ button {
   border-radius: 0.25rem;
   color: $font-color-inputs;
   font-size: 100%;
-  height: 2rem;
+  height: 2.375rem;
   outline: none !important;
   text-align: center;
 
