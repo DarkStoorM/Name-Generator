@@ -1,9 +1,9 @@
 .text-input {
   &--counter {
-    width: 6rem;
+    max-width: 4.25rem;
   }
 
   &--template {
-    width: 16rem;
+    width: 100%;
   }
 }
