@@ -1,5 +1,15 @@
+// Extract the messy Vite typings
+type TEnvPluginResult = {
+  name: string;
+  transformIndexHtml(html: string): string;
+};
+
+type TEnvPlugin = null | (() => TEnvPluginResult);
+
+export type TEnv = "default" | "local";
+
 type TEnvConfig = Record<
-  Env,
+  TEnv,
   {
     /**
      * Custom plugin to use during the environment check.
@@ -10,12 +20,8 @@ type TEnvConfig = Record<
      *
      * @default null
      */
-    plugin:
-      | null
-      | (() => {
-          name: string;
-          transformIndexHtml(html: string): string;
-        });
+    plugin: TEnvPlugin;
+
     /**
      * Base path where the assets are served from. While the default is `'/'`, it can't be
      * used when building for production when the application is used outside the server
@@ -27,17 +33,12 @@ type TEnvConfig = Record<
   }
 >;
 
-export enum Env {
-  DEFAULT = "default",
-  LOCAL = "local",
-}
-
-export const config: TEnvConfig = {
-  [Env.DEFAULT]: {
+const config: TEnvConfig = {
+  default: {
     plugin: null,
     base: "/",
   },
-  [Env.LOCAL]: {
+  local: {
     plugin: swapModule,
     base: "./",
   },
@@ -54,4 +55,15 @@ function swapModule() {
       return html.replace(`type="module" crossorigin`, "defer");
     },
   };
+}
+
+export function getCustomPlugin(environment: TEnv): [string, TEnvPluginResult] {
+  const plugin = config[environment].plugin;
+  let customPlugin: TEnvPluginResult = null;
+
+  if (plugin) {
+    customPlugin = plugin();
+  }
+
+  return [config[environment].base, customPlugin];
 }

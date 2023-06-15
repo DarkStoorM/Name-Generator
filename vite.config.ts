@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { Env, config } from "./vite.env.config";
+import { TEnv, getCustomPlugin } from "./vite.env.config";
 
 /*
  * --------------------------------------------------------------------------
@@ -20,14 +20,14 @@ import { Env, config } from "./vite.env.config";
  * WARNING:
  *
  * If you want to build a release for local use without a server (offline use),
- * use `Env.LOCAL` environment, as this will change how the HTML is emitted
+ * use `local` environment, as this will change how the HTML is emitted
  *
- * The default `Env.DEFAULT` will use Vite's default configs
+ * The default `default` will use Vite's default configs
  */
-const ENVIRONMENT = Env.DEFAULT;
+const ENVIRONMENT: TEnv = "local";
 
-const customPlugin = config[ENVIRONMENT].plugin;
+const [basePath, customPlugin] = getCustomPlugin(ENVIRONMENT);
 export default defineConfig({
-  plugins: [react(), customPlugin ? customPlugin() : null],
-  base: config[ENVIRONMENT].base,
+  plugins: [react(), customPlugin],
+  base: basePath,
 });
