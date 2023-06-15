@@ -29,7 +29,9 @@ export class C64 {
   }
 
   /**
-   * Returns a pseudo-random number between 0 and 255 (JavaScript-only solution for initial random)
+   * Returns a random number between 0 and 255 (JavaScript-only solution for initial random)
+   *
+   * NOTE: 255 is the maximum value for this algorithm
    */
   public static makePseudoSeed = (): number => {
     return Math.floor(Math.random() * 256);
