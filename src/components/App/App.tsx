@@ -81,7 +81,7 @@ export function App() {
       <Description />
       <form className="input-form" onSubmit={handleRegenerate}>
         <div className="input-form__inputs">
-          <div className="input-form__inputs__container">
+          <div className="input-form__inputs__container input-form__inputs__container__counter">
             <TextInput
               defaultValue={namesCount}
               elementId="count"
@@ -92,7 +92,7 @@ export function App() {
               onChangeInputHandler={handleCounterChange}
             />
           </div>
-          <div className="input-form__inputs__container">
+          <div className="input-form__inputs__container input-form__inputs__container__template">
             <TextInput
               defaultValue={template.current?.value ?? config.defaultTemplate}
               elementId="template"
@@ -103,7 +103,7 @@ export function App() {
               onChangeInputHandler={handleChange}
             />
           </div>
-          <div className="input-form__inputs__container">
+          <div className="input-form__inputs__container input-form__inputs__container__button">
             <Button text="regenerate" />
           </div>
         </div>
