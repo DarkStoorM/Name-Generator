@@ -1,4 +1,7 @@
+import { TNumberGenerators } from "../NameGenerator";
+
 export const config = {
+  numberGenerator: "mulberry32" as TNumberGenerators,
   casingPatterns: { lower: new RegExp(/[ab]/), upper: new RegExp(/[AB]/) },
   consonants: "bcdfghjklmnpqrstvwxz",
   defaultNamesCount: 30,
