@@ -68,16 +68,26 @@ Given the example template on the image above, a certain amount of names will be
 
 ## RNG Choice
 
-This project features a *custom* PRNG, because the default `random` in JavaScript does not allow seeding without some manual magic, but since I had a PRNG class ready to use from other project, I just moved it over.
+This project features a different PRNG, because the default `Math.random()` in JavaScript does not allow seeding without some manual magic, but since I had a couple PRNG classes ready to use from other project, I just moved them over.
 
 Reasons why **seeded** PRNG is required:
 
 - while editing the template string, we **can not** just randomly pick a new character for each name every time we change something. The seed is stored every time a new generation is requested (on start, on `regenerate` click)
 - seeded PRNG allows retaining the same state for all names in the current generation, meaning we can change the names counter as much as we want or change the template string - the names will be generated for the same state regardless of those edits, each internal generator has its own initial seed, which is reused until the user decided to regenerate the names
 
-PRNG class:
+PRNG classes:
 
-Available in ["./src/Utils/Generators/C64.ts"](https://github.com/DarkStoorM/Name-Generator/blob/main/src/Utils/Generators/C64.ts), this class has a period of 80 (or 81). For now, this is a temporary implementation, more classes will be implemented in the future, but that should not really matter, since the letter tables are short - 20 consonants, 6 vowels.
+- [ ] TODO: add more classes
+- [ ] TODO: document custom PRNG implementation
+
+Available in `./src/Utils/Generators/`. More classes will be implemented in the future to provide some variety. Currently available generators:
+
+- C64
+- Mulberry32
+
+> Note on C64: this generator works with a small range of numbers from 0 to 255 and frequent collisions are possible. This generator has a period of 80 (or 81).
+
+The method should not really matter, since the letter tables are short - 20 consonants, 6 vowels.
 
 > Despite `Y` being considered a consonant or a semi-vowel, it will be used as a vowel for generating names, because why not :)
 
@@ -101,10 +111,10 @@ Some templates, that **might** work:
 
 Although there are no *real* recommended settings, sometimes even from 4 characters for **almost** any given template, randomly placed `3V+1C` or `3C+1V`, like `Abaa` or `Babb`
 
-![img](https://user-images.githubusercontent.com/7021295/246493672-f7eb4b74-fa62-4ea7-b483-c17a9f9547f6.png)
+![img](https://user-images.githubusercontent.com/7021295/246510576-c6eca24c-e6c4-4772-8f75-d6f77e3a7052.png)
 
-![img](https://user-images.githubusercontent.com/7021295/246484508-83545982-c0cf-4136-8df8-9de6fe79ae3a.png)
+![img](https://user-images.githubusercontent.com/7021295/246510685-5297ddab-31a7-4f0a-ab92-4481cb6a05db.png)
 
 Combining the two templates into one **might** be useful when generating some bizarre Location names:
 
-![img](https://user-images.githubusercontent.com/7021295/246484865-86485ecc-0e2f-4ee3-9dc2-4e494ac7cced.png)
+![img](https://user-images.githubusercontent.com/7021295/246510858-dec61350-6554-4a39-99bb-69ccd38ca67b.png)
