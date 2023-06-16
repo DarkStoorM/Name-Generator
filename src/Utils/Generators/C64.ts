@@ -30,7 +30,7 @@ export class C64 implements IRNG {
     return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
   };
 
-  public next = (): number => {
+  public next = (lettersTable: string): number => {
     let t, e;
     const s = 128 * (1 & this.randSeed1);
     const d = (this.state >> 1) & 127;
@@ -42,7 +42,7 @@ export class C64 implements IRNG {
       (t = (e = this.randSeed1 + t + s) > 255 ? 1 : 0),
       (e = (e &= 255) + t + d),
       (this.randSeed1 = 255 & e),
-      this.randSeed1
+      this.randSeed1 % lettersTable.length
     );
   };
 

@@ -13,7 +13,7 @@ export class Mulberry32 implements IRNG {
     return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
   };
 
-  public next = (): number => {
+  public next = (lettersTable: string): number => {
     this.state = (this.state + 0x9e3779b9) | 0;
     let z = this.state;
     z ^= z >>> 16;
@@ -23,7 +23,8 @@ export class Mulberry32 implements IRNG {
     z ^= z >>> 15;
     this.state = z >>> 0;
 
-    return this.state / 0xffffffff;
+    // Since we are converting it to 0 - 1 range, we have to strip the decimals and return int only
+    return ((this.state / 0xffffffff) * lettersTable.length) >>> 0;
   };
 
   public reset = (): void => {
