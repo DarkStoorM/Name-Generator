@@ -1,4 +1,5 @@
-import { C64 } from "./Utils/Generators/C64";
+import { Mulberry32 } from "./Utils/Generators/Mulberry32";
+import { IRNG } from "./Utils/Interfaces/IRNG";
 import { TLettersTable } from "./Utils/Types/TLettersTable";
 import { config } from "./Utils/config";
 
@@ -6,7 +7,7 @@ class Generator {
   /**
    * Internal array of number generator instances
    */
-  private generators: C64[] = [];
+  private generators: IRNG[] = [];
   /**
    * Set at runtime, flag indicating the next processed letter has matched the lowercase pattern
    */
@@ -34,7 +35,7 @@ class Generator {
   /**
    * Currently indexed generator instance assigned when generating new names
    */
-  private declare rng: C64;
+  private declare rng: IRNG;
 
   public constructor() {
     this.lettersTable = {
@@ -54,7 +55,10 @@ class Generator {
   public createGenerators = (): void => {
     // Make max generators at start to not regenerate the existing results when changing
     // the names count
-    this.generators = Array.from({ length: config.maximumNamesCount }, () => new C64(C64.makePseudoSeed()));
+    this.generators = Array.from(
+      { length: config.maximumNamesCount },
+      () => new Mulberry32(Mulberry32.makePseudoSeed())
+    );
   };
 
   /**
@@ -122,7 +126,10 @@ class Generator {
    * @param   {boolean}  asCapital  When true, will be convert the picked letter to uppercase
    */
   private getRandomLetter = (letters: string, asCapital?: boolean) => {
-    const letter = letters[this.rng.next() % letters.length];
+    // TODO: remove this temporary hack and move it to the rng class
+    const num = (this.rng.next() * letters.length) >>> 0;
+
+    const letter = letters[num];
 
     return asCapital ? letter.toUpperCase() : letter;
   };
