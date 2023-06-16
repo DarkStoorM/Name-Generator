@@ -1,7 +1,14 @@
+import { C64 } from "./Utils/Generators/C64";
 import { Mulberry32 } from "./Utils/Generators/Mulberry32";
 import { IRNG } from "./Utils/Interfaces/IRNG";
 import { TLettersTable } from "./Utils/Types/TLettersTable";
 import { config } from "./Utils/config";
+
+export type TNumberGenerators = "c64" | "mulberry32";
+const generators: Record<TNumberGenerators, { new (state: number): object }> = {
+  c64: C64,
+  mulberry32: Mulberry32,
+};
 
 class Generator {
   /**
@@ -53,12 +60,10 @@ class Generator {
    * Repopulates the generators array with instances of the C64 PRNGs
    */
   public createGenerators = (): void => {
+    const generator = generators[config.numberGenerator];
     // Make max generators at start to not regenerate the existing results when changing
     // the names count
-    this.generators = Array.from(
-      { length: config.maximumNamesCount },
-      () => new Mulberry32(Mulberry32.makePseudoSeed())
-    );
+    this.generators = Array.from({ length: config.maximumNamesCount }, () => new generator(generator.makePseudoSeed()));
   };
 
   /**
@@ -97,7 +102,8 @@ class Generator {
          *
          * The does not apply to illegal characters, that don't match the casing patterns.
          */
-        this.rng.next();
+        this.rng.next("");
+        // -- The above is an exception to force-generate, but don't use the result
 
         return;
       } else {
@@ -122,14 +128,11 @@ class Generator {
   /**
    * Returns a random letter from the given string of characters
    *
-   * @param   {string}   letters    A string of characters to pick from
+   * @param   {string}   letters    A string of characters to pick from - either consonants or vowels
    * @param   {boolean}  asCapital  When true, will be convert the picked letter to uppercase
    */
   private getRandomLetter = (letters: string, asCapital?: boolean) => {
-    // TODO: remove this temporary hack and move it to the rng class
-    const num = (this.rng.next() * letters.length) >>> 0;
-
-    const letter = letters[num];
+    const letter = letters[this.rng.next(letters)];
 
     return asCapital ? letter.toUpperCase() : letter;
   };
