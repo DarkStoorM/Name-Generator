@@ -24,7 +24,7 @@ import { TEnv, getCustomPlugin } from "./vite.env.config";
  *
  * The default `default` will use Vite's default configs
  */
-const ENVIRONMENT: TEnv = "local";
+const ENVIRONMENT: TEnv = "default";
 
 const [basePath, customPlugin] = getCustomPlugin(ENVIRONMENT);
 export default defineConfig({
