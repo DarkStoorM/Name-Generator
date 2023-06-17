@@ -1,20 +1,12 @@
-import { C64 } from "./Utils/Generators/C64";
-import { Mulberry32 } from "./Utils/Generators/Mulberry32";
-import { IRNG } from "./Utils/Interfaces/IRNG";
+import { BaseNumberGenerator } from "./Utils/Generators/BaseNumberGenerator";
 import { TLettersTable } from "./Utils/Types/TLettersTable";
 import { config } from "./Utils/config";
-
-export type TNumberGenerators = "c64" | "mulberry32";
-const generators: Record<TNumberGenerators, { new (state: number): object }> = {
-  c64: C64,
-  mulberry32: Mulberry32,
-};
 
 class Generator {
   /**
    * Internal array of number generator instances
    */
-  private generators: IRNG[] = [];
+  private generators: BaseNumberGenerator[] = [];
   /**
    * Set at runtime, flag indicating the next processed letter has matched the lowercase pattern
    */
@@ -42,7 +34,7 @@ class Generator {
   /**
    * Currently indexed generator instance assigned when generating new names
    */
-  private declare rng: IRNG;
+  private declare rng: BaseNumberGenerator;
 
   public constructor() {
     this.lettersTable = {
@@ -60,10 +52,9 @@ class Generator {
    * Repopulates the generators array with instances of the C64 PRNGs
    */
   public createGenerators = (): void => {
-    const generator = generators[config.numberGenerator];
     // Make max generators at start to not regenerate the existing results when changing
     // the names count
-    this.generators = Array.from({ length: config.maximumNamesCount }, () => new generator(generator.makePseudoSeed()));
+    this.generators = Array.from({ length: config.maximumNamesCount }, () => new config.numberGenerator());
   };
 
   /**
