@@ -22,7 +22,8 @@ body {
 }
 
 input,
-button {
+button,
+select {
   background-color: $input-background;
   border: 1px solid $input-border;
   border-radius: 0.25rem;
