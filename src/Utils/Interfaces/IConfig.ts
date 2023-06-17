@@ -1,10 +1,11 @@
+import { TIndexedNumberGenerators } from "../Types/TIndexedNumberGenerators";
 import { TNumberGenerator } from "../Types/TNumberGenerator";
 
 export interface IConfig {
   /**
    * Regular Expression patterns used for matching letter casing
    *
-   * @default /aA/ | /bB/
+   * @default /ab/ | /AB/
    */
   casingPatterns: {
     lower: RegExp;
@@ -14,6 +15,10 @@ export interface IConfig {
    * Table of Consonants
    */
   consonants: string;
+  /**
+   * Index (name) of the currently selected random number generator
+   */
+  currentGenerator: TIndexedNumberGenerators;
   /**
    * Default number of names to display on the page
    */
@@ -48,4 +53,13 @@ export interface IConfig {
    * Table of Vowels
    */
   vowels: string;
+
+  /**
+   * Changes the pseudo-random number generator for the Name Generator
+   *
+   * Handled at runtime by generator selection component
+   *
+   * @param   {TIndexedNumberGenerators}  generatorIndex  Index (name) of the random number generator
+   */
+  changeGenerator(generatorIndex: TIndexedNumberGenerators): void;
 }
