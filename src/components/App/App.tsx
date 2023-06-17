@@ -3,18 +3,21 @@ import "./App.scss";
 import "./InputForm.scss";
 import { NameGenerator } from "../../NameGenerator";
 import { Numbers } from "../../Utils/Numbers";
+import { TIndexedNumberGenerators } from "../../Utils/Types/TIndexedNumberGenerators";
 import { config } from "../../Utils/config";
 import { Button } from "../Button/Button";
 import { Description } from "../Layout/Description/Description";
 import { Header } from "../Layout/Header/Header";
 import { NamesList } from "../NamesList/NamesList";
 import { TextInput } from "../TextInput/TextInput";
+import { Select } from "../Select/Select";
 
 export function App() {
   const [result, setResult] = useState<string[]>([]);
   const [namesCount, setNamesCount] = useState(config.defaultNamesCount);
   const template = useRef<HTMLInputElement>(null);
   const countInput = useRef<HTMLInputElement>(null);
+  const generatorInput = useRef<HTMLSelectElement>(null);
 
   function handleRegenerate(event: FormEvent) {
     event.preventDefault();
@@ -75,6 +78,19 @@ export function App() {
     generateResult();
   }, [generateResult, namesCount]);
 
+  function handleSelection() {
+    const generatorIndex = generatorInput.current?.value;
+
+    if (!generatorIndex) {
+      throw new Error("??");
+    }
+
+    config.changeGenerator(generatorIndex as TIndexedNumberGenerators);
+    NameGenerator.createGenerators();
+
+    generateResult();
+  }
+
   return (
     <div className="container">
       <Header />
@@ -101,6 +117,14 @@ export function App() {
               elementReference={template}
               maxInputLength={config.maximumTemplateInputSize}
               onChangeInputHandler={handleChange}
+            />
+          </div>
+          <div className="input-form__inputs__container input-form__inputs__container__template">
+            <Select
+              elementId="generator-selection"
+              elementLabelText="algorithm"
+              elementReference={generatorInput}
+              onChangeSelectHandler={handleSelection}
             />
           </div>
           <div className="input-form__inputs__container input-form__inputs__container__button">
