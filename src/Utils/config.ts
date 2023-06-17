@@ -4,15 +4,18 @@ import { IConfig } from "./Interfaces/IConfig";
 import { TIndexedNumberGenerators } from "./Types/TIndexedNumberGenerators";
 import { TNumberGenerator } from "./Types/TNumberGenerator";
 
-const defaultGenerator: TIndexedNumberGenerators = "c64";
+const defaultGenerator: TIndexedNumberGenerators = "mulberry32";
 
-const numberGenerators: Record<TIndexedNumberGenerators, TNumberGenerator> = {
+const availableNumberGenerators: Record<TIndexedNumberGenerators, TNumberGenerator> = {
   c64: C64,
   mulberry32: Mulberry32,
 };
 
+/**
+ * Provides the application configs for defaults
+ */
 export const config: IConfig = {
-  numberGenerator: numberGenerators[defaultGenerator],
+  numberGenerator: availableNumberGenerators[defaultGenerator],
   casingPatterns: { lower: new RegExp(/[ab]/), upper: new RegExp(/[AB]/) },
   consonants: "bcdfghjklmnpqrstvwxz",
   defaultNamesCount: 30,
