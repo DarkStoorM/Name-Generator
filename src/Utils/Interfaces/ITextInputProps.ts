@@ -1,5 +1,9 @@
 export interface ITextInputProps {
   /**
+   * Default value to display in this input
+   */
+  defaultValue: number | string;
+  /**
    * DOM element id to match the label with
    */
   elementId: string;
@@ -15,10 +19,6 @@ export interface ITextInputProps {
    */
   elementModifierClassType: "counter" | "template";
   /**
-   * Handler function to fire on this input change
-   */
-  onChangeInputHandler: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  /**
    * React reference to this input element
    */
   elementReference: React.LegacyRef<HTMLInputElement> | undefined;
@@ -27,7 +27,7 @@ export interface ITextInputProps {
    */
   maxInputLength: number;
   /**
-   * Default value to display in this input
+   * Handler function to fire on this input change
    */
-  defaultValue: number | string;
+  onChangeInputHandler: React.ChangeEventHandler<HTMLInputElement> | undefined;
 }
