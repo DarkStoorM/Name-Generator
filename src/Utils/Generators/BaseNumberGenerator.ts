@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 export abstract class BaseNumberGenerator {
   /**
    * The initial state stored for reset purposes
