@@ -1,4 +1,4 @@
-import { IRNG } from "../Interfaces/IRNG";
+import { BaseNumberGenerator } from "./BaseNumberGenerator";
 
 /**
  * JS interpretation of Boulder Dash PRNG.
@@ -6,31 +6,17 @@ import { IRNG } from "../Interfaces/IRNG";
  * This has been minified and reformatted from some online version, which was translated from
  * Basic to C, then to JavaScript and minified ¯\_(ツ)_/¯
  */
-export class C64 implements IRNG {
+export class C64 extends BaseNumberGenerator {
   /**
    * Lower bit of the state
    */
   private randSeed1 = 0;
 
-  /**
-   * The initial state stored for reset purposes
-   */
-  public initialState = 0;
-  /**
-   * Current State
-   */
-  public state = 0;
-
-  constructor(state: number) {
-    this.state = state;
-    this.initialState = state;
+  constructor() {
+    super(() => Math.floor(Math.random() * 256));
   }
 
-  public static makePseudoSeed = (): number => {
-    return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-  };
-
-  public next = (lettersTable: string): number => {
+  public override next = (lettersTable: string): number => {
     let t, e;
     const s = 128 * (1 & this.randSeed1);
     const d = (this.state >> 1) & 127;
@@ -46,11 +32,7 @@ export class C64 implements IRNG {
     );
   };
 
-  public reset = (): void => {
-    this.state = this.initialState;
-    // The lower bit of the state has to be reset to zero, because it's changing at runtime and
-    // when we only reset the initial state, we end up having a different number, being unable
-    // to recreate the next() from the initial state
+  public override reset = (): void => {
     this.randSeed1 = 0;
   };
 }
