@@ -1,5 +1,12 @@
 # Random Name Generator
 
+- [Random Name Generator](#random-name-generator)
+  - [Running](#running)
+  - [RNG Choice](#rng-choice)
+  - [Recommended templates](#recommended-templates)
+
+---
+
 Small TS-React project - simple name generator from random letters.
 
 Names are generated according to the provided `Template String`, which replaces it with corresponding letters from the table:
@@ -29,7 +36,32 @@ There are two ways of running Vite apps:
 > Refer to the [Custom Vite Config](https://github.com/DarkStoorM/Name-Generator/blob/main/vite.config.ts#L27)
 > Because Vite builds will not work offline (CORS issue), there are automatic adjustments implemented
 
-To run this application in a server environment, simply just run `npm run vite`.
+To run this application in a server environment, simply just run:
+
+```plaintext
+npm run dev
+```
+
+For a code watcher, run:
+
+```plaintext
+npm run watch
+```
+
+Building the source is available from the following command:
+
+```plaintext
+npm run build
+```
+
+There is an old Linter/Formatter I add to every project, which is a bit outdated in terms of code maintenance. I could move this to Husky, but whatever :)
+
+```plaintext
+// This will run Prettier to format the codebase, then ESLint to do some linting
+npm run src:fix
+```
+
+---
 
 To run this application outside the server environment - opening the built `.html`, change the `ENVIRONMENT` from `default` constant to `local`.
 
