@@ -1,7 +1,18 @@
-import { TNumberGenerators } from "../NameGenerator";
+import { C64 } from "./Generators/C64";
+import { Mulberry32 } from "./Generators/Mulberry32";
+import { IConfig } from "./Interfaces/IConfig";
+import { TIndexedNumberGenerators } from "./Types/TIndexedNumberGenerators";
+import { TNumberGenerator } from "./Types/TNumberGenerator";
 
-export const config = {
-  numberGenerator: "mulberry32" as TNumberGenerators,
+const defaultGenerator: TIndexedNumberGenerators = "c64";
+
+const numberGenerators: Record<TIndexedNumberGenerators, TNumberGenerator> = {
+  c64: C64,
+  mulberry32: Mulberry32,
+};
+
+export const config: IConfig = {
+  numberGenerator: numberGenerators[defaultGenerator],
   casingPatterns: { lower: new RegExp(/[ab]/), upper: new RegExp(/[AB]/) },
   consonants: "bcdfghjklmnpqrstvwxz",
   defaultNamesCount: 30,
