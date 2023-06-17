@@ -39,9 +39,9 @@ export abstract class BaseNumberGenerator {
    * @param   {string}  lettersTable  Letters table to pick a random letter from - consonants or vowels
    * @override
    */
-  public next = (lettersTable: string): number => {
+  public next(lettersTable: string): number {
     return 0;
-  };
+  }
 
   /**
    * Resets the internals
@@ -51,9 +51,9 @@ export abstract class BaseNumberGenerator {
    * only the lower byte is used and has to be reset
    * @override
    */
-  public reset = (): void => {
+  public reset(): void {
     this.state = this.initialState;
-  };
+  }
 
   /**
    * Populates the initial/current state with a number that should be returned by the provided
@@ -61,8 +61,10 @@ export abstract class BaseNumberGenerator {
    *
    * @param   {number}  seedCallback  Callback to execute for initialization
    */
-  private makePseudoSeed = (seedCallback: () => number): void => {
-    this.initialState = seedCallback();
-    this.state = seedCallback();
-  };
+  private makePseudoSeed(seedCallback: () => number): void {
+    const newSeed = seedCallback();
+
+    this.initialState = newSeed;
+    this.state = newSeed;
+  }
 }
