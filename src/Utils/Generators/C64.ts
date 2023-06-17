@@ -16,7 +16,7 @@ export class C64 extends BaseNumberGenerator {
     super(() => Math.floor(Math.random() * 256));
   }
 
-  public override next = (lettersTable: string): number => {
+  public override next(lettersTable: string): number {
     let t, e;
     const s = 128 * (1 & this.randSeed1);
     const d = (this.state >> 1) & 127;
@@ -30,9 +30,9 @@ export class C64 extends BaseNumberGenerator {
       (this.randSeed1 = 255 & e),
       this.randSeed1 % lettersTable.length
     );
-  };
+  }
 
-  public override reset = (): void => {
+  public override reset(): void {
     this.randSeed1 = 0;
-  };
+  }
 }

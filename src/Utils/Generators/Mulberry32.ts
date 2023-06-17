@@ -5,7 +5,7 @@ export class Mulberry32 extends BaseNumberGenerator {
     super(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
   }
 
-  public override next = (lettersTable: string): number => {
+  public next(lettersTable: string): number {
     this.state = (this.state + 0x9e3779b9) | 0;
     let z = this.state;
     z ^= z >>> 16;
@@ -17,5 +17,5 @@ export class Mulberry32 extends BaseNumberGenerator {
 
     // Since we are converting it to 0 - 1 range, we have to strip the decimals and return int only
     return ((this.state / 0xffffffff) * lettersTable.length) >>> 0;
-  };
+  }
 }
