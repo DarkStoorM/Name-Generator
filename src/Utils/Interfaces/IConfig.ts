@@ -13,6 +13,8 @@ export interface IConfig {
   };
   /**
    * Table of Consonants
+   *
+   * NOTE: This table has been rearranged to match C64's algorithm letter frequency
    */
   consonants: string;
   /**
