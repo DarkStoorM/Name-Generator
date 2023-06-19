@@ -114,15 +114,14 @@ Available in `./src/Utils/Generators/`. More classes will be implemented in the 
 - C64
 - Mulberry32
 
-> Note on C64: this generator works with a small range of numbers from 0 to 255 and frequent collisions are possible. This generator has a period of 80 (or 81).
+> Note on C64: this generator works with a small range of numbers from 0 to 255 and frequent collisions are possible. This generator has a period of 73.
 
-The picked number generator should not really matter, since the letter tables are short - 20 consonants, 6 vowels, but there is a chance, that one generator will work better for some templates than the others
+The picked number generator should not really matter, since the letter tables are short - 21 consonants, 5 vowels, but there is a chance, that one generator will work better for some templates than the others
 
-> Despite `Y` being considered a consonant or a semi-vowel, it will be used as a vowel for generating names, because why not :)
+> ~~Despite `Y` being considered a consonant or a semi-vowel, it will be used as a vowel for generating names, because why not :)~~
+> Upon further testing, `y` has been moved back to the `consonants table`, because it turned out to actually be a bad idea.
 
 There are many solutions, but that's the first one I had at hand - adding seeded PRNGs, because I wanted the generators to retain their states on every change until prompted.
-
-> There are possible name collisions for the C64 generator, since this one works with small numbers of 0-255.
 
 ---
 
