@@ -26,14 +26,14 @@ export const config: IConfig = {
   numberGenerator: Mulberry32,
   currentGenerator: "Mulberry32",
   casingPatterns: { lower: new RegExp(/[ab]/), upper: new RegExp(/[AB]/) },
-  consonants: "bcdfghjklmnpqrstvwxz",
+  consonants: "fndplzjhwbcqmykrtvxsg",
   defaultNamesCount: 30,
   defaultTemplate: "Abbaba Babaab",
   maximumCounterInputSize: 3,
   maximumNameLength: 20,
   maximumNamesCount: 50,
   maximumTemplateInputSize: 20,
-  vowels: "aeiouy",
+  vowels: "eoiua",
   changeGenerator(generatorIndex: TIndexedNumberGenerators) {
     this.currentGenerator = generatorIndex;
     this.numberGenerator = getNumberGenerator(generatorIndex);
