@@ -19,6 +19,10 @@ export function App() {
   const countInput = useRef<HTMLInputElement>(null);
   const generatorInput = useRef<HTMLSelectElement>(null);
 
+  /**
+   * Re-creates all generators with new seeds, which will generate new names, unlike
+   * the template string change
+   */
   function handleRegenerate(event: FormEvent) {
     event.preventDefault();
 
@@ -29,6 +33,10 @@ export function App() {
     generateResult();
   }
 
+  /**
+   * Separate regeneration method, which does not involve re-creating the generators, allowing
+   * to modify the template string without affecting the generator instances
+   */
   function handleChange(event: FormEvent) {
     event.preventDefault();
 
@@ -36,7 +44,7 @@ export function App() {
   }
 
   /**
-   * Converts the input string from
+   * Converts the input string into random names
    */
   function handleCounterChange(event: FormEvent): void {
     event.preventDefault();
