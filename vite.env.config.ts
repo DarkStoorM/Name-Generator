@@ -4,8 +4,14 @@ type TEnvPluginResult = {
   transformIndexHtml(html: string): string;
 };
 
+/**
+ * Alias of the return type for the accepted plugins type by Vite Config
+ */
 type TEnvPlugin = null | (() => TEnvPluginResult);
 
+/**
+ * Application environment switch
+ */
 export type TEnv = "default" | "local";
 
 type TEnvConfig = Record<
@@ -57,6 +63,10 @@ function swapModule() {
   };
 }
 
+/**
+ * Returns the Vite config plugin `config`, which is used to change the way Vite builds the
+ * source
+ */
 export function getCustomPlugin(environment: TEnv): [string, TEnvPluginResult] {
   const plugin = config[environment].plugin;
   let customPlugin: TEnvPluginResult = null;
