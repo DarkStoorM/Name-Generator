@@ -2,6 +2,8 @@
 
 - [Random Name Generator](#random-name-generator)
   - [Running](#running)
+    - [Running the App Locally](#running-the-app-locally)
+  - [Overview](#overview)
   - [RNG Choice](#rng-choice)
     - [PRNGs - Disclaimer](#prngs---disclaimer)
   - [Recommended templates](#recommended-templates)
@@ -65,7 +67,16 @@ npm run src:fix
 
 ---
 
-To run this application outside the server environment - opening the built `.html`, change the `ENVIRONMENT` from `default` constant to `local`.
+### Running the App Locally
+
+To run this application outside the server environment - opening the built `.html`, navigate to `./vite.config.ts` and change the `ENVIRONMENT` from `default` constant to `local`:
+
+```ts
+// Changing this will switch to the "local" mode, allowing the app to open without a server
+const ENVIRONMENT: TEnv = "default";
+```
+
+After this, run `npm run build` command and the application will be ready under the `/dist/` directory.
 
 This is required as Vite injects a `crossorigin` `module` script:
 
@@ -88,6 +99,8 @@ Switching to `local` environment will build the `.html` with a changed script ta
 > Notice the changed path from `/` to `./`. which is also required.
 
 ---
+
+## Overview
 
 This is a very old idea of not picking a name from certain name tables and does **not** involve machine learning. This simply walks through the given template string and picks a matching template character.
 
