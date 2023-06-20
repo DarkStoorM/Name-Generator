@@ -25,7 +25,7 @@ export class JenkinsSmallFast extends BaseNumberGenerator {
     this.state3 |= 0;
     this.state4 |= 0;
 
-    let t = (this.state1 - ((this.state2 << 27) | (this.state2 >>> 5))) | 0;
+    const t = (this.state1 - ((this.state2 << 27) | (this.state2 >>> 5))) | 0;
 
     this.state1 = this.state2 ^ ((this.state3 << 17) | (this.state3 >>> 15));
     this.state2 = (this.state3 + this.state4) | 0;

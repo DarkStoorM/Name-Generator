@@ -20,7 +20,7 @@ export class Xoshiro128 extends BaseNumberGenerator {
   }
 
   public next(lettersTable: string): number {
-    let t = this.state2 << 9;
+    const t = this.state2 << 9;
     let r = this.state2 * 5;
 
     r = ((r << 7) | (r >>> 25)) * 9;

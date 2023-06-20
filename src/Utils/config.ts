@@ -1,13 +1,13 @@
 import { getNumberGenerator } from "./Functions/SelectGenerator";
 import { C64 } from "./Generators/C64";
-import { MultiplyWithCarry } from "./Generators/MultiplyWithCarry";
+import { JenkinsSmallFast } from "./Generators/JenkinsSmallFast";
 import { Mulberry32 } from "./Generators/Mulberry32";
+import { MultiplyWithCarry } from "./Generators/MultiplyWithCarry";
+import { SimpleFastCounter } from "./Generators/SimpleFastCounter32";
+import { Xoshiro128 } from "./Generators/Xoshiro128";
 import { IConfig } from "./Interfaces/IConfig";
 import { TIndexedNumberGenerators } from "./Types/TIndexedNumberGenerators";
 import { TNumberGenerator } from "./Types/TNumberGenerator";
-import { SimpleFastCounter } from "./Generators/SimpleFastCounter32";
-import { Xoshiro128 } from "./Generators/Xoshiro128";
-import { JenkinsSmallFast } from "./Generators/JenkinsSmallFast";
 
 /**
  * Exposes a map of implemented random number generators

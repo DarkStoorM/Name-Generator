@@ -9,8 +9,8 @@ import { Button } from "../Button/Button";
 import { Description } from "../Layout/Description/Description";
 import { Header } from "../Layout/Header/Header";
 import { NamesList } from "../NamesList/NamesList";
-import { TextInput } from "../TextInput/TextInput";
 import { Select } from "../Select/Select";
+import { TextInput } from "../TextInput/TextInput";
 
 export function App() {
   const [result, setResult] = useState<string[]>([]);
