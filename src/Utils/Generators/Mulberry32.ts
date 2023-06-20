@@ -2,7 +2,7 @@ import { BaseNumberGenerator } from "./BaseNumberGenerator";
 
 export class Mulberry32 extends BaseNumberGenerator {
   constructor() {
-    super(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+    super();
   }
 
   public next(lettersTable: string): number {

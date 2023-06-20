@@ -13,7 +13,7 @@ export class C64 extends BaseNumberGenerator {
   private randSeed1 = 0;
 
   constructor() {
-    super(() => Math.floor(Math.random() * 256));
+    super();
   }
 
   public override next(lettersTable: string): number {
