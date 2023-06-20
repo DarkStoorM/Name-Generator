@@ -176,7 +176,7 @@ Combining the two templates into one **might** be useful when generating some bi
 
 ## Conclusion
 
-Obviously, the quality of the names is not satisfying, but this is yet another one of those `just another time killer` projects, don't rely on this.
+Obviously, the quality of the names is not satisfying, but this is just one of those `yet another time killer` projects, don't rely on this.
 
 Results with the provided example template:
 
