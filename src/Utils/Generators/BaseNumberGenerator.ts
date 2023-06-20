@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 export abstract class BaseNumberGenerator {
   /**
    * The initial state stored for reset purposes
@@ -9,19 +8,10 @@ export abstract class BaseNumberGenerator {
    * Current State
    */
   protected state = 0;
+  protected hashedSeed: [number, number, number, number] = [0, 0, 0, 0];
 
-  /**
-   * `example`: passing the callback function from inheriting class, which uses an integer as seed
-   *
-   * ```ts
-   * // Usually this should be the same for all implementations
-   * super(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
-   * ```
-   *
-   * @param   {number}  seedCallback  Callback function used to seed the new instances on the fly
-   */
-  constructor(seedCallback: () => number) {
-    this.makePseudoSeed(seedCallback);
+  constructor() {
+    this.createSeed();
 
     // Avoid forcing the inheriting classes to call super.reset() on every reset implementation
     const origin = this.reset;
@@ -58,15 +48,41 @@ export abstract class BaseNumberGenerator {
   }
 
   /**
-   * Populates the initial/current state with a number that should be returned by the provided
-   * callback to this method
-   *
-   * @param   {number}  seedCallback  Callback to execute for initialization
+   * Creates and stores a set of initial states for seeding
    */
-  private makePseudoSeed(seedCallback: () => number): void {
-    const newSeed = seedCallback();
+  private createSeed(): void {
+    this.hash();
+
+    const newSeed = this.hashedSeed[0];
 
     this.initialState = newSeed;
     this.state = newSeed;
+  }
+
+  /**
+   * Creates a set of states to seed random number generators
+   */
+  protected hash(): void {
+    const str = Math.random().toString(36).substr(2);
+
+    let h1 = 1779033703;
+    let h2 = 3144134277;
+    let h3 = 1013904242;
+    let h4 = 2773480762;
+
+    for (let i = 0, k; i < str.length; i++) {
+      k = str.charCodeAt(i);
+      h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+      h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+      h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+      h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+    }
+
+    h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+    h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+    h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+    h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+
+    this.hashedSeed = [(h1 ^ h2 ^ h3 ^ h4) >>> 0, (h2 ^ h1) >>> 0, (h3 ^ h1) >>> 0, (h4 ^ h1) >>> 0];
   }
 }
