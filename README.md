@@ -133,6 +133,8 @@ There are many solutions, but that's the first one I had at hand - adding seeded
 
 I **do not** guarantee, that the pseudo-random number generators were implemented correctly, I just wrote tests for all generators with the distribution output to make sure they do their thing, but do they do that correctly, I don't know ツ.
 
+All generators (except C64) will yield pretty similar results, so the algorithm won't really matter.
+
 ---
 
 ## Recommended templates
