@@ -3,7 +3,9 @@
 - [Random Name Generator](#random-name-generator)
   - [Running](#running)
   - [RNG Choice](#rng-choice)
+    - [PRNGs - Disclaimer](#prngs---disclaimer)
   - [Recommended templates](#recommended-templates)
+  - [Conclusion](#conclusion)
 
 ---
 
@@ -100,7 +102,7 @@ Given the example template on the image above, a certain amount of names will be
 
 ## RNG Choice
 
-This project features a different PRNG, because the default `Math.random()` in JavaScript does not allow seeding without some manual magic, but since I had a couple PRNG classes ready to use from other project, I just moved them over.
+This project features different PRNGs, because the default `Math.random()` in JavaScript does not allow seeding without some manual magic, but since I had a couple PRNG classes ready to use from other project, I just moved them over.
 
 Reasons why **seeded** PRNG is required:
 
@@ -109,19 +111,27 @@ Reasons why **seeded** PRNG is required:
 
 PRNG classes:
 
-Available in `./src/Utils/Generators/`. More classes will be implemented in the future to provide some variety. Currently available generators:
+Currently available generators: `./src/Utils/Generators/`
 
 - C64
+- Jenkin's Small Fast
 - Mulberry32
+- Multiply With Carry
+- Simple Fast Counter
+- Xoshiro128"
 
 > Note on C64: this generator works with a small range of numbers from 0 to 255 and frequent collisions are possible. This generator has a period of 73.
 
 The picked number generator should not really matter, since the letter tables are short - 21 consonants, 5 vowels, but there is a chance, that one generator will work better for some templates than the others
 
 > ~~Despite `Y` being considered a consonant or a semi-vowel, it will be used as a vowel for generating names, because why not :)~~
-> Upon further testing, `y` has been moved back to the `consonants table`, because it turned out to actually be a bad idea.
+> Upon further testing, `y` has been moved back to the `consonants table`, because it actually turned out to be a bad idea.
 
 There are many solutions, but that's the first one I had at hand - adding seeded PRNGs, because I wanted the generators to retain their states on every change until prompted.
+
+### PRNGs - Disclaimer
+
+I **do not** guarantee, that the pseudo-random number generators were implemented correctly, I just wrote tests for all generators with the distribution output to make sure they do their thing, but do they do that correctly, I don't know ツ.
 
 ---
 
@@ -139,10 +149,20 @@ Some templates, that **might** work:
 
 Although there are no *real* recommended settings, sometimes even from 4 characters for **almost** any given template, randomly placed `3V+1C` or `3C+1V`, like `Abaa` or `Babb`
 
-![img](https://user-images.githubusercontent.com/7021295/246510576-c6eca24c-e6c4-4772-8f75-d6f77e3a7052.png)
+![obimhraz](https://user-images.githubusercontent.com/7021295/247231148-235b524f-2347-478c-b695-6078e30c406a.png)
 
-![img](https://user-images.githubusercontent.com/7021295/246510685-5297ddab-31a7-4f0a-ab92-4481cb6a05db.png)
+![img](https://user-images.githubusercontent.com/7021295/247231351-2f4d3508-e168-46a2-b2c9-d04f7e7968a6.png)
 
-Combining the two templates into one **might** be useful when generating some bizarre Location names:
+Combining the two templates into one **might** be useful when generating some bizarre Location meme names, but the chance is low:
 
-![img](https://user-images.githubusercontent.com/7021295/246510858-dec61350-6554-4a39-99bb-69ccd38ca67b.png)
+![img](https://user-images.githubusercontent.com/7021295/247232365-4db41104-029f-4159-9b09-7903b7fdb0d3.png)
+
+---
+
+## Conclusion
+
+Obviously, the quality of the names is not satisfying, but this is yet another one of those `just another time killer` projects.
+
+Results with the provided example template:
+
+![img](https://user-images.githubusercontent.com/7021295/247234710-2ff84dcc-d221-4981-b5a8-cdbd346a303d.png)
