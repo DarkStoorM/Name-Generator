@@ -104,7 +104,7 @@ Switching to `local` environment will build the `.html` with a changed script ta
 
 This is a very old idea of not picking a name from certain name tables and does **not** involve machine learning. This simply walks through the given template string and picks a matching template character.
 
-![img](https://user-images.githubusercontent.com/7021295/246472326-ab92ef66-bc89-4c9d-81c2-f4d5f479515b.png)
+![img](https://user-images.githubusercontent.com/7021295/247234710-2ff84dcc-d221-4981-b5a8-cdbd346a303d.png)
 
 Given the example template on the image above, a certain amount of names will be generated (up to 50, no need to generate more) of a maximum length of 20 characters.
 
@@ -162,7 +162,7 @@ Some templates, that **might** work:
 - Babaab
 - Babbab
 
-Although there are no *real* recommended settings, sometimes even from 4 characters for **almost** any given template, randomly placed `3V+1C` or `3C+1V`, like `Abaa` or `Babb`
+Although there are no *real* recommended settings, sometimes even from just 4 characters for **almost** any given template, randomly placed `3V+1C` or `3C+1V`, like `Abaa` or `Babb` can give something usable.
 
 ![obimhraz](https://user-images.githubusercontent.com/7021295/247231148-235b524f-2347-478c-b695-6078e30c406a.png)
 
@@ -177,7 +177,3 @@ Combining the two templates into one **might** be useful when generating some bi
 ## Conclusion
 
 Obviously, the quality of the names is not satisfying, but this is just one of those `yet another time killer` projects, don't rely on this.
-
-Results with the provided example template:
-
-![img](https://user-images.githubusercontent.com/7021295/247234710-2ff84dcc-d221-4981-b5a8-cdbd346a303d.png)
