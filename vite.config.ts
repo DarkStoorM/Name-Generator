@@ -20,9 +20,9 @@ import { TEnv, getCustomPlugin } from "./vite.env.config";
  * WARNING:
  *
  * If you want to build a release for local use without a server (offline use),
- * use `local` environment, as this will change how the HTML is emitted
+ * switch to `local` environment, as this will change how the HTML is emitted
  *
- * The default `default` will use Vite's default configs
+ * With `default` environment settings, Vite will emit its regular HTML with modules
  */
 const ENVIRONMENT: TEnv = "default";
 
